@@ -1,13 +1,32 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+
 export function HeroSection() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (video) {
+      video.setAttribute("webkit-playsinline", "true");
+      video.setAttribute("playsinline", "true");
+      video.play().catch((error) => {
+        console.log("Autoplay prevented:", error);
+      });
+    }
+  }, []);
+
   return (
     <section id="home" className="relative flex min-h-screen items-center overflow-hidden">
       <video
+        ref={videoRef}
         className="absolute inset-0 h-full w-full object-cover"
         src="/clideo_editor_1cb1efe9996b44ff9b86c9e1efe15542.webm"
         autoPlay
         muted
         loop
         playsInline
+        preload="auto"
         aria-hidden="true"
       />
 
